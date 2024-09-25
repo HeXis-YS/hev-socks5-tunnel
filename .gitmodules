@@ -10,3 +10,6 @@
 [submodule "src/core"]
 	path = src/core
 	url = https://github.com/heiher/hev-socks5-core
+[submodule "third-part/mimalloc"]
+	path = third-part/mimalloc
+	url = https://github.com/HeXis-YS/mimalloc

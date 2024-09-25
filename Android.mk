@@ -15,6 +15,9 @@
 
 TOP_PATH := $(call my-dir)
 
+ifeq ($(filter $(modules-get-list),mimalloc),)
+    include $(TOP_PATH)/third-part/mimalloc/Android.mk
+endif
 ifeq ($(filter $(modules-get-list),yaml),)
     include $(TOP_PATH)/third-part/yaml/Android.mk
 endif
@@ -39,9 +42,9 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_PATH)/third-part/lwip/src/include \
 	$(LOCAL_PATH)/third-part/lwip/src/ports/include \
 	$(LOCAL_PATH)/third-part/hev-task-system/include
-LOCAL_CFLAGS += -DFD_SET_DEFINED -DSOCKLEN_T_DEFINED $(VERSION_CFLAGS)
+LOCAL_CFLAGS += -DFD_SET_DEFINED -DSOCKLEN_T_DEFINED -fno-builtin-malloc $(VERSION_CFLAGS)
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 LOCAL_CFLAGS += -mfpu=neon
 endif
-LOCAL_STATIC_LIBRARIES := yaml lwip hev-task-system
+LOCAL_STATIC_LIBRARIES := mimalloc yaml lwip hev-task-system
 include $(BUILD_SHARED_LIBRARY)
